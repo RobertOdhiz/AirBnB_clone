@@ -21,7 +21,7 @@ class FileStorage:
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
         if obj:
-            key = '{}.{}'.format(self.__class__.__name__, self.id)
+            key = '{}.{}'.format(self.__class__.__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -37,6 +37,11 @@ class FileStorage:
         """ deserializes the json file to objects if it exists, otherwise do nothing """
         try:
             with open(self.__file_path, 'r', encoding='UTF-8') as f:
-                new_dict = json.load(f)
+                reloaded_dict = json.load(f)
+            for key, value in reloaded_dict.items():
+                class_name, obj_id = key.split('.')
+                class_obj = globals()[class_name]
+                obj_instance = class_obj(**value)
+                self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
