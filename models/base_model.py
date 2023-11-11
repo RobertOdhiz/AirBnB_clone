@@ -33,6 +33,10 @@ class BaseModel:
         """
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
+    def __repr__(self):
+        """ Returns string repr """
+        return (self.__str__())
+
     def save(self):
         """ Saves the instance created by updated the updated_at field """
         self.updated_at = datetime.now()

@@ -3,6 +3,7 @@
 Module with the file_storage engine
 """
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -11,6 +12,7 @@ class FileStorage:
     """
     __file_path = 'file.json'
     __objects = {}
+    classes = {"BaseModel": BaseModel}
 
     def all(self):
         """
@@ -21,7 +23,7 @@ class FileStorage:
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
         if obj:
-            key = '{}.{}'.format(self.__class__.__name__, obj.id)
+            key = '{}.{}'.format(type(obj).__class__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -39,9 +41,7 @@ class FileStorage:
             with open(self.__file_path, 'r', encoding='UTF-8') as f:
                 reloaded_dict = json.load(f)
             for key, value in reloaded_dict.items():
-                class_name, obj_id = key.split('.')
-                class_obj = globals()[class_name]
-                obj_instance = class_obj(**value)
-                self.__objects[key] = obj_instance
+                obj = self.classes[value['__class__']](**value)
+                self.__objects[key] = obj
         except FileNotFoundError:
             pass
