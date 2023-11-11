@@ -9,6 +9,7 @@ from models.review import Review
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
+from models.user import User
 from models.place import Place
 from shlex import split
 import re
@@ -42,7 +43,8 @@ class HBNBCommand(cmd.Cmd):
             "Amenity",
             "Place",
             "City",
-            "Review"
+            "Review",
+            "User"
     }
 
     def do_quit(self, arg):
@@ -117,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             obj_list = []
             for obj in storage.all().values():
-                if len(args) > 0 and args[0] == obj.__class.__name__:
+                if len(args) > 0 and args[0] == obj.__class__.__name__:
                     obj_list.append(obj.__str__())
                 elif len(args) == 0:
                     obj_list.append(obj.__str__())

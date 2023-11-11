@@ -9,6 +9,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 class FileStorage:
@@ -21,7 +22,8 @@ class FileStorage:
             "State": State,
             "City": City,
             "Amenity": Amenity,
-            "Review": Review
+            "Review": Review,
+            "User": User
     }
 
     def all(self):
@@ -33,7 +35,7 @@ class FileStorage:
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
         if obj:
-            key = '{}.{}'.format(type(obj).__class__, obj.id)
+            key = '{}.{}'.format(obj.__class__.__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
