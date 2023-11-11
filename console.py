@@ -5,6 +5,11 @@ Module with the console application
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.review import Review
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
 from shlex import split
 import re
 
@@ -32,7 +37,12 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = ('(hbnb) ')
     __classes = {
-            "BaseModel"
+            "BaseModel",
+            "Review",
+            "Amenity",
+            "Place",
+            "City",
+            "Review"
     }
 
     def do_quit(self, arg):
