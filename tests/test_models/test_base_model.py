@@ -9,6 +9,7 @@ from datetime import datetime
 from time import sleep
 from models.base_model import BaseModel
 
+
 class TestBaseModel_instantiation(unittest.TestCase):
     """Unittests for testing instantiation of the BaseModel class."""
 
@@ -75,7 +76,8 @@ class TestBaseModel_instantiation(unittest.TestCase):
     def test_instantiation_with_args_and_kwargs(self):
         dt = datetime.today()
         dt_iso = dt.isoformat()
-        base_model = BaseModel("12", id="345", created_at=dt_iso, updated_at=dt_iso)
+        base_model = BaseModel(
+                        "12", id="345", created_at=dt_iso, updated_at=dt_iso)
         self.assertEqual(base_model.id, "345")
         self.assertEqual(base_model.created_at, dt)
         self.assertEqual(base_model.updated_at, dt)
