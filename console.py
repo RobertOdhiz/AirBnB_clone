@@ -66,6 +66,27 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+    def default(self, arg):
+        """Default behavior for cmd module for invalid input"""
+        argdict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+           args = [arg[:match.span()[0]], arg[match.span()[1]:]]
+           match = re.search(r"\((.*?)\)", args[1])
+           if match is not None:
+               command = [args[1][:match.span()[0]], match.group()[1:-1]]       
+               if command[0] in argdict.keys():
+                   call = "{} {}".format(args[0], command[1])
+                   return argdict[command[0]](call)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
+
     def do_create(self, arg):
         """ Creates a new BaseModel Instance """
         if not arg:
@@ -169,6 +190,15 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
+    def do_count(self, arg):
+        """ Retrieve number of instances of a stated class """
+        args = label(arg)
+        count = 0
+        for obj in storage.all().values():
+            if args[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
