@@ -51,3 +51,23 @@ margin-bottom: 0px;
 text-align: left;
 margin-left: 30px;
 }
+.popover {
+display: none;
+border: 1px solid #DDDDDD;
+border-radius: 4px;
+position: relative;
+background-color: #FAFAFA;
+z-index: 1;
+}
+.popover h2 {
+font-size: 16px;
+}
+li {
+list-style-type: none;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+.locations:hover .popover,
+.amenities:hover .popover {
+display: block;
+}
