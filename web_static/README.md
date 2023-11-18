@@ -1,3 +1,3 @@
-##Static frontend for AirBnB-clone
+## Static frontend for AirBnB-clone
 - HTML
 - CSS
